@@ -2,6 +2,16 @@
 
 This document defines the collaboration constraints for Codex (`openai/codex`) when working in this repository.
 
+## General Principles
+
+- **Think Before Coding**: State assumptions explicitly. If multiple interpretations exist, present them — don't pick silently. If a simpler approach exists, say so. If something is unclear, stop and ask.
+
+- **Simplicity First**: Write the minimum code that solves the problem. No speculative features, no abstractions for single-use code, no unnecessary "flexibility" or error handling for impossible scenarios. If 200 lines could be 50, rewrite it.
+
+- **Surgical Changes**: Touch only what you must. Don't "improve" adjacent code, comments, or formatting. Don't refactor things that aren't broken. Match existing style. If your changes create orphaned imports/variables/functions, remove them; don't remove pre-existing dead code unless asked. Every changed line should trace directly to the request.
+
+- **Goal-Driven Execution**: Transform tasks into verifiable goals. For multi-step tasks, state a brief plan with verification checks. Write tests that reproduce bugs before fixing them. Ensure tests pass before and after refactors.
+
 ## Coding Standards
 
 - **Language**: Use English for code, comments, Python docstrings, and commit messages. Repository documentation may use Chinese, but use English by default unless otherwise specified.
@@ -24,14 +34,19 @@ This document defines the collaboration constraints for Codex (`openai/codex`) w
       """
   ```
 
-- **Quality Checks**: After modifying code, you must run the following checks:
+- **Quality Checks**: After modifying code, run the applicable checks and fix all reported issues before finishing.
+
+  **Backend (Python)**:
   - `uv run ruff check <code/dir>`: Static analysis and style checks
   - `uv run ruff format <code/dir>`: Code formatting
   - `uv run mypy <code/dir>`: Static type checking
-  - `pnpm lint`: Frontend linting
-  - `pnpm exec tsc --noEmit`: Frontend type checking
 
-  Fix all issues reported by these tools before finishing the task.
+  **Frontend (only when the project contains a frontend)**:
+  - Linting: `pnpm exec eslint <dir>`
+  - Formatting: `pnpm exec prettier --write <dir>`
+  - Type checking: `pnpm exec tsc --noEmit`
+
+  If the project has no frontend (no `package.json`), skip all frontend checks.
 
 ## Git Commits
 
@@ -43,21 +58,16 @@ This document defines the collaboration constraints for Codex (`openai/codex`) w
   type(scope): short imperative description
   ```
 
-- **Commit Rules**:
-  - Use lowercase commit types such as `feat`, `fix`, `refactor`, or `docs`
-  - Use a short, specific scope such as `admin`, `settings`, `tracking`, `dialog`, `app`, `favorites`, `notify`, or `mcp`
-  - Write the description in English
-  - Use an imperative description that states the change directly
-  - Do not end the summary with a period
-  - Do not add emojis, issue numbers, or extra commentary
-  - If the work includes multiple unrelated concerns, split it into multiple commits
+- **Committer**: Use the default Git committer identity. Do not add `Co-authored-by` or any other trailer.
 
-- **Examples**:
-  - `fix(admin): improve mobile layouts`
-  - `fix(settings): improve mobile layouts`
-  - `fix(dialog): constrain shared modal widths`
-  - `feat(tracking): add ai failover and strict push gating`
-  - `refactor(notify): drop legacy ai config aliases`
+- **Commit Permission**: Do not run `git commit` autonomously. Every commit requires explicit approval from the user. After each set of changes, present what will be committed and wait for permission before committing. Previous approval does not carry over — each commit needs fresh permission.
+
+- **Commit Rules**:
+  - Lowercase type + short specific scope + imperative English description, no period, no emojis or issue numbers
+  - Commit message must be a single line — no body, no multi-line explanation
+  - Unrelated concerns must be split into separate commits
+  - Examples: `fix(admin): improve mobile layouts`, `feat(tracking): add ai failover and strict push gating`, `refactor(notify): drop legacy ai config aliases`
+
 
 ## Context7 Integration
 
