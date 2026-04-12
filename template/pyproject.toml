@@ -1,0 +1,31 @@
+[project]
+name = "{{project_name}}"
+version = "0.1.0"
+description = "{{project_description}}"
+readme = "README.md"
+requires-python = ">={{python_version}}"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "mypy>=1.18.2",
+    "ruff>=0.14.6"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["scripts*"]
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+exclude = ["docs"]
+
+[tool.ruff.lint]
+select = ["E", "F", "UP", "B", "SIM", "I"]
+
+[tool.mypy]
+disable_error_code = ["import-untyped"]
+exclude = ["docs"]

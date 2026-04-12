@@ -1,0 +1,9 @@
+[
+    {
+        "filename": "example.csv",
+        "alias": "example",
+        "exclude_columns": [0, 1],
+        "label_column": -1,
+        "description": "Example entry — replace with your dataset or delete this block"
+    }
+]
