@@ -13,11 +13,11 @@ The CLI probes for these tools at startup and prints install hints if anything i
 ## Usage
 
 ```bash
-npm create paper-py@latest my-paper
+npm create @qianfuv/paper-py@latest my-paper
 # or
-npx create-paper-py my-paper
+npx @qianfuv/create-paper-py my-paper
 # or
-pnpm create paper-py my-paper
+pnpm create @qianfuv/paper-py my-paper
 ```
 
 ## What it generates
@@ -57,7 +57,7 @@ pnpm create paper-py my-paper
 8. `uv sync` — create `.venv` and install now
 9. `git init`
 
-Non-interactive mode: `create-paper-py my-paper --yes`
+Non-interactive mode: `npx @qianfuv/create-paper-py my-paper --yes`
 
 ## Version detection
 

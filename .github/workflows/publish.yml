@@ -34,7 +34,7 @@ jobs:
         shell: bash
         run: |
           LOCAL_VERSION="$(node -p "require('./package.json').version")"
-          PUBLISHED_VERSION="$(npm view create-paper-py version 2>/dev/null || true)"
+          PUBLISHED_VERSION="$(npm view @qianfuv/create-paper-py version 2>/dev/null || true)"
 
           echo "local=${LOCAL_VERSION}" >> "${GITHUB_OUTPUT}"
           echo "published=${PUBLISHED_VERSION}" >> "${GITHUB_OUTPUT}"
@@ -51,4 +51,4 @@ jobs:
 
       - name: Publish package
         if: steps.version.outputs.publish == 'true'
-        run: npm publish --provenance
+        run: npm publish --access public --provenance

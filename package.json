@@ -1,11 +1,9 @@
 {
-  "name": "create-paper-py",
+  "name": "@qianfuv/create-paper-py",
   "version": "0.1.0",
   "description": "Scaffold a UV-powered Python research paper project in seconds",
   "type": "module",
-  "bin": {
-    "create-paper-py": "./dist/index.js"
-  },
+  "bin": "dist/index.js",
   "files": [
     "dist",
     "template"
@@ -36,6 +34,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/QianFuv/create-paper-py.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "license": "MIT",
   "engines": {
