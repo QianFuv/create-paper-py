@@ -1,113 +1,21 @@
 # create-paper-py
 
-Scaffold a UV-powered Python research paper project in seconds — a `create-vite`-style CLI for academic/research work.
+`create-paper-py` 是一个用于快速生成 Python 论文 / 科研项目骨架的 CLI。生成出的项目默认使用 `uv` 管理依赖，并内置常用目录结构、基础配置文件和一个可扩展的数据加载工具模块。
 
-## Prerequisites
+## 使用方法
 
-- [uv](https://docs.astral.sh/uv/) (the generated project is managed by `uv`)
-- git (optional, used only when you enable `git init`)
-- NVIDIA GPU + driver (optional, auto-detected for PyTorch CUDA configuration)
-
-The CLI probes for these tools at startup and prints install hints if anything is missing.
-
-## Usage
+在使用前，请先确保本机已安装 `uv`。随后可以通过以下任一方式创建项目：
 
 ```bash
 npm create @qianfuv/paper-py@latest my-paper
-# or
+# 或
 npx @qianfuv/create-paper-py my-paper
-# or
+# 或
 pnpm create @qianfuv/paper-py my-paper
 ```
 
-## What it generates
-
-```
-<project>/
-├── scripts/
-│   ├── __init__.py
-│   └── s0_utilities/
-│       └── dataset_loader.py   # config-driven data loading
-├── tests/
-├── datas/
-│   ├── assets/                 # static assets (fonts, images)
-│   │   └── TimesSun.ttf
-│   ├── raw_data/               # original data + datasets.json config
-│   │   └── datasets.json
-│   ├── data/                   # processed data
-│   └── output/                 # models, metrics, artifacts
-├── docs/
-├── backup/
-├── .gitignore
-├── CLAUDE.md
-├── AGENTS.md
-├── pyproject.toml              # [project] + [tool.ruff] + [tool.mypy]
-└── README.md
-```
-
-## Interactive flow
-
-1. Project name (validated, normalized to PEP-503)
-2. Short description
-3. Python version (auto-detected from `uv python list`)
-4. Runtime packages (space-separated, optional)
-5. Dev tools (`ruff` + `mypy`)
-6. Extra dev packages (optional)
-7. PyTorch — auto-detects CUDA via `nvidia-smi`; shows CUDA version selector when GPU is found, CPU-only otherwise
-8. `uv sync` — create `.venv` and install now
-9. `git init`
-
-Non-interactive mode: `npx @qianfuv/create-paper-py my-paper --yes`
-
-## Version detection
-
-All version defaults are fetched at runtime:
-
-| Item | Source |
-|------|--------|
-| Python | `uv python list --only-installed` |
-| PyTorch | PyPI JSON API |
-| CUDA options | PyTorch wheel index + `nvidia-smi` |
-
-Fallback values are used when network or tools are unavailable.
-
-## Local Development
+如果你希望跳过交互式提问，可以使用：
 
 ```bash
-npm install
-npm run build          # produces dist/index.js
-npm run smoke          # end-to-end smoke test
-
-# Code quality
-npm run lint           # eslint
-npm run format         # prettier
-npm run typecheck      # tsc --noEmit
-```
-
-Run the CLI directly:
-
-```bash
-node dist/index.js my-test-project
-```
-
-## Project layout (this repo)
-
-```
-create-paper-py/
-├── src/
-│   ├── index.tsx       # CLI entry, orchestration
-│   ├── prompts.tsx     # interactive flow
-│   ├── env-check.tsx   # uv/git/CUDA detection + version fetching
-│   ├── scaffold.tsx    # template copy + placeholder substitution
-│   ├── runners.tsx     # uv / git subprocess wrappers
-│   ├── render.tsx      # gradient banner + spinner
-│   ├── utils.tsx       # shared helpers
-│   ├── types.tsx       # type definitions
-│   └── smoke.tsx       # end-to-end smoke test
-├── template/           # project template (copied as-is, placeholders applied)
-├── eslint.config.mjs
-├── .prettierrc
-├── tsconfig.json
-├── tsup.config.ts
-└── package.json
+npx @qianfuv/create-paper-py my-paper --yes
 ```
