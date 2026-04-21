@@ -1,6 +1,6 @@
 {
   "name": "@qianfuv/create-paper-py",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Scaffold a UV-powered Python research paper project in seconds",
   "type": "module",
   "bin": "dist/index.js",
