@@ -29,6 +29,14 @@
     "template",
     "create-paper-py"
   ],
+  "homepage": "https://github.com/QianFuv/create-paper-py#readme",
+  "bugs": {
+    "url": "https://github.com/QianFuv/create-paper-py/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QianFuv/create-paper-py.git"
+  },
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"

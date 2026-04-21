@@ -1,0 +1,54 @@
+name: Publish Package
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Build package
+        run: npm run build
+
+      - name: Check published version
+        id: version
+        shell: bash
+        run: |
+          LOCAL_VERSION="$(node -p "require('./package.json').version")"
+          PUBLISHED_VERSION="$(npm view create-paper-py version 2>/dev/null || true)"
+
+          echo "local=${LOCAL_VERSION}" >> "${GITHUB_OUTPUT}"
+          echo "published=${PUBLISHED_VERSION}" >> "${GITHUB_OUTPUT}"
+
+          if [ "${LOCAL_VERSION}" != "${PUBLISHED_VERSION}" ]; then
+            echo "publish=true" >> "${GITHUB_OUTPUT}"
+          else
+            echo "publish=false" >> "${GITHUB_OUTPUT}"
+          fi
+
+      - name: Check package contents
+        if: steps.version.outputs.publish == 'true'
+        run: npm pack --dry-run
+
+      - name: Publish package
+        if: steps.version.outputs.publish == 'true'
+        run: npm publish --provenance
