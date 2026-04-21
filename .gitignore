@@ -7,3 +7,5 @@ dist/
 !.vscode/settings.json
 # Local test outputs
 /test-output/
+/AGENTS.md
+/CLAUDE.md
